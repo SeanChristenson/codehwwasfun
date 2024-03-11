@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Artistic Page</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <style>
+        .rotating {
+            transition: transform 1s ease;
+        }
+        .image {
+            width: 200px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+    <div id="container">
+        <img class="image" src="image111.jpg" alt="Image 1">
+        <img class="image" src="image222.jpg" alt="Image 2">
+        <img class="image" src="image333.jpg" alt="Image 3">
+        
+        <div id="text" class="rotating"></div>
+
+        <div class="shape triangle rotating" id="triangle">Triangle</div>
+        <div class="shape square rotating" id="square">Square</div>
+        <div class="shape circle rotating" id="circle">Circle</div>
+
+    </div>
+
+    <script>
+        $(document).ready(function() {
+            var images = $(".image");
+            var texts = ["Hippity Hoppity", "Gib Gib Gib", "Coding is Love Coding is Life"]; 
+            var shapes = $(".shape");
+
+            var currentIndex = 0;
+
+            function rotateImages() {
+                images.each(function() {
+                    var angle = Math.random() * 90 - 45; 
+                    $(this).css({ transform: 'rotate(' + angle + 'deg)' });
+                });
+            }
+
+            function rotateTexts() {
+                var angle = Math.random() * 90 - 45; 
+                $("#text").text(texts[currentIndex]).css({ transform: 'rotate(' + angle + 'deg)' }).fadeIn("slow");
+            }
+
+            function moveShapes() {
+                shapes.each(function(index) {
+                    var shape = $(this);
+                    var angle = Math.random() * 90 - 45; 
+                    var newX = Math.random() * ($(window).width() - shape.width());
+                    var newY = Math.random() * ($(window).height() - shape.height());
+                    setTimeout(function() {
+                        shape.css({ 
+                            top: newY, 
+                            left: newX, 
+                            transform: 'rotate(' + angle + 'deg)' 
+                        }).fadeOut("slow").fadeIn("slow");
+                    }, index * 1000); 
+                });
+            }
+
+            function moveImages() {
+                images.each(function(index) {
+                    var image = $(this);
+                    var angle = Math.random() * 90 - 45; 
+                    var newX = Math.random() * ($(window).width() - image.width());
+                    var newY = Math.random() * ($(window).height() - image.height());
+                    setTimeout(function() {
+                        image.fadeOut("slow", function() {
+                            image.css({ 
+                                top: newY, 
+                                left: newX, 
+                                transform: 'rotate(' + angle + 'deg)' 
+                            }).fadeIn("slow");
+                        });
+                    }, index * 1000); 
+                });
+            }
+            function fadeInShapesAndImages() {
+                shapes.fadeIn("slow");
+                images.fadeIn("slow");
+            }
+            setInterval(function() {
+                rotateImages();
+                rotateTexts();
+                moveShapes();
+                moveImages();
+                setTimeout(fadeInShapesAndImages, 2000); 
+                currentIndex = (currentIndex + 1) % texts.length;
+            }, 3000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,26 @@
+/* styles.css */
+.shape {
+    position: absolute;
+    display: none;
+}
+
+.triangle {
+    width: 500;
+    height: 500;
+    border-left: 50px solid transparent;
+    border-right: 50px solid transparent;
+    border-bottom: 100px solid blue;
+}
+
+.square {
+    width: 500px;
+    height: 500px;
+    background-color: red;
+}
+
+.circle {
+    width: 500px;
+    height: 500px;
+    background-color: green;
+    border-radius: 50%;
+}
